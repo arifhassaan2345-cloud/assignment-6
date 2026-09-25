@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Toast from "@/components/Toast/Toast";
 
 type Workout = {
   id: number;
@@ -26,6 +27,7 @@ export default function WorkoutDetails({
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [toast, setToast] = useState("");
 
   useEffect(() => {
     async function loadWorkout() {
@@ -67,6 +69,7 @@ export default function WorkoutDetails({
 
     if (alreadyAdded) {
       setMessage("This workout is already in your plan.");
+      setToast("This workout is already in your plan.");
       return;
     }
 
@@ -78,6 +81,8 @@ export default function WorkoutDetails({
     );
 
     setMessage("Workout added to your plan!");
+    setToast("Workout added to your plan!");
+    
   }
 
   if (loading) {
@@ -102,6 +107,7 @@ export default function WorkoutDetails({
 
   return (
     <main className="min-h-screen bg-gray-50 px-6 py-12">
+      <Toast message={toast} />
       <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl bg-white shadow-sm">
         <div className="grid md:grid-cols-2">
           <img
@@ -200,6 +206,7 @@ export default function WorkoutDetails({
 
     if (alreadySaved) {
       setMessage("This workout is already saved.");
+      setToast("This workout is already saved.");
       return;
     }
 
@@ -211,6 +218,7 @@ export default function WorkoutDetails({
     );
 
     setMessage("Workout saved for later!");
+    setToast("Workout saved for later!");
   }}
   className="mt-3 w-full rounded-lg border border-gray-300 px-6 py-3 font-semibold text-gray-900 hover:bg-gray-100">
 
