@@ -184,6 +184,38 @@ export default function WorkoutDetails({
             >
               Add to Today's Plan
             </button>
+            <button
+  onClick={() => {
+    if (!workout) return;
+
+    const existingSaved = localStorage.getItem("fitlog-saved");
+
+    const saved: Workout[] = existingSaved
+      ? JSON.parse(existingSaved)
+      : [];
+
+    const alreadySaved = saved.some(
+      (item) => item.id === workout.id
+    );
+
+    if (alreadySaved) {
+      setMessage("This workout is already saved.");
+      return;
+    }
+
+    const updatedSaved = [...saved, workout];
+
+    localStorage.setItem(
+      "fitlog-saved",
+      JSON.stringify(updatedSaved)
+    );
+
+    setMessage("Workout saved for later!");
+  }}
+  className="mt-3 w-full rounded-lg border border-gray-300 px-6 py-3 font-semibold text-gray-900 hover:bg-gray-100">
+
+  Save for Later
+</button>
 
             {message && (
               <p className="mt-4 text-center text-sm font-medium text-green-600">
